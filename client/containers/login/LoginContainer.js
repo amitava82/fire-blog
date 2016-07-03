@@ -20,7 +20,7 @@ export default class LoginContainer extends React.Component{
     e.preventDefault();
     const email = this.refs.l_email.value;
     const password = this.refs.l_password.value;
-    const p = this.props.dispatch(signin(email, password)).catch(
+    this.props.dispatch(signin(email, password)).catch(
       e => alert(e)
     );
   }
@@ -30,7 +30,7 @@ export default class LoginContainer extends React.Component{
     e.preventDefault();
     const email = this.refs.s_email.value;
     const password = this.refs.s_password.value;
-    const p = this.props.dispatch(signup(email, password)).catch(
+    this.props.dispatch(signup(email, password)).catch(
       e => alert(e)
     );
   }

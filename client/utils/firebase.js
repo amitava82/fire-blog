@@ -18,3 +18,10 @@ export default {
     google: new firebase.auth.GoogleAuthProvider()
   }
 }
+
+export function recordFromSnapshot(snapshot) {
+  const record = snapshot.val();
+  if(!record) return record;
+  record.key = snapshot.key;
+  return record;
+}

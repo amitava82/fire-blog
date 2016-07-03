@@ -3,9 +3,10 @@
  */
 import extend from 'lodash/extend';
 import {push} from 'react-router-redux';
-import firebase from '../../utils/firebase';
+import firebase, {recordFromSnapshot} from '../../utils/firebase';
 
 import createAction from '../createAction';
+import {saveUser} from './users';
 
 const [STORE_SESSION, DELETE_SESSION, LOGIN] = createAction('session', ["STORE_SESSION", "DELETE_SESSION", "LOGIN"]);
 
@@ -54,6 +55,7 @@ export function signup(email, password){
   return dispatch => {
     return firebase.firebaseAuth.createUserWithEmailAndPassword(email, password).then(
       user => {
+        saveUser(userModel(user));
         dispatch(storeSession(user));
         dispatch(push('/'));
       }
@@ -78,7 +80,6 @@ export function initAuth(){
       user => {
         if(user){
           dispatch(storeSession(user));
-          dispatch(push('/'));
         }
         unsub();
       },
@@ -91,13 +92,22 @@ export function openOauthPopup() {
   return (dispatch) => {
     return firebase.firebaseAuth.signInWithPopup(firebase.providers.google).then(
       r => {
-        dispatch(storeSession(r));
+        saveUser(userModel(r.user));
+        dispatch(storeSession(r.user));
         dispatch(push('/blogs'));
       },
       error => dispatch(logout())
     )
   }
 
+}
+
+function userModel(sess){
+  return {
+    uid: sess.uid,
+    name: sess.displayName || sess.email.split('@')[0],
+    email: sess.email
+  }
 }
 
 export function logout(){

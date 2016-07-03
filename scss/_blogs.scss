@@ -1,0 +1,21 @@
+.blogs-container{
+
+    .blog{
+        .blog-title{
+            margin-bottom: .25rem;
+        }
+        .blog-meta{
+            margin-bottom: 1.25rem;
+            color: #999;
+        }
+        .blog-tags{
+            .label{
+                background-color: #eee;
+                margin-right: 5px;
+                color: #555;
+                font-weight: 300;
+                font-size: 70%;
+            }
+        }
+    }
+}
