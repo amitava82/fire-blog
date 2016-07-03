@@ -9,7 +9,7 @@ export default function (props) {
   const blog = props.blog;
   const prettyDate = new Date(blog.createdAt).toDateString();
   const tags = map(blog.tags, (tag => <span className="label label-default" key={tag}>{tag}</span>));
-  const isOwner = blog.owner === props.user && props.user.uid;
+  const isOwner = props.user && props.user.uid && blog.owner === props.user.uid;
   return (
     <div className="blog">
       <h1 className="blog-title"><Link to={`/blogs/${blog.key}`}>{blog.title}</Link></h1>
