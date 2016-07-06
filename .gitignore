@@ -7,3 +7,7 @@ w.js
 
 build/public
 bower_components
+webpack
+public/app.css
+public/app.js
+public/vendor.js

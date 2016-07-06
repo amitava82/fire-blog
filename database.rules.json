@@ -1,0 +1,30 @@
+{
+  ".read": false,
+  ".write": false,
+  "blogs": {
+    ".read": true,
+    "$postId": {
+        ".write": "auth != null && (!data.exists() || data.child('owner').val() === auth.uid)",
+        ".validate": "newData.hasChildren(['content', 'title', 'owner', 'createdAt'])",
+        "owner": {
+            ".validate": "(auth.uid === newData.val())"
+        }
+    }
+  },
+  "users": {
+      ".read": true,
+      "$userId": {
+          ".write": "auth != null && (!data.exists() || $userId === auth.uid)",
+          ".validate": "newData.hasChildren(['name', 'email'])"
+      }
+  },
+  "comments": {
+      ".read": true,
+      "$blogId": {
+          "$commentId": {
+              ".write": "!data.exists()",
+              ".validate": "newData.hasChildren(['name', 'comment', 'createdAt'])"
+          }
+      }
+  }
+}
